@@ -15,8 +15,8 @@ if __name__ == '__main__':
 
     for i in tqdm.tqdm(range(1,11)):
         params = {
-            ('key','AIzaSyDA2z-ZOZcnkIjVKkwaAxXnYblHHY3lNUM'),
-            ('cx', '017930800208229040610:cpgopip5no8'),
+            ('key','KEY'),
+            ('cx', 'CX'),
             ('q', sys.argv[1]),
             ('searchType', 'image'),
             ('num', 10), #max per day?
