@@ -6,7 +6,16 @@ import urllib.request
 import os
 import argparse
 
+def dir_path(string):
+    if os.path.exists(string):
+        return string
+    else:
+        raise NotADirectoryError(string)
+
+
 if __name__ == '__main__':
+    write = dir_path(sys.argv[2])
+
     if len(sys.argv) != 3:
         print('Use case: scrape.py <search term> <write location>')
         sys.exit()
@@ -26,7 +35,7 @@ if __name__ == '__main__':
         response = requests.get('https://www.googleapis.com/customsearch/v1?', params=params)
         if response.status_code == 200:
             for j, responses in tqdm.tqdm(enumerate(response.json()['items'])):
-                urllib.request.urlretrieve(responses['link'], sys.argv[2] + '/{}{}.png'.format(i,j))
+                urllib.request.urlretrieve(responses['link'], write + '/{}{}.png'.format(i,j))
         else:
             print('API Error')
             sys.exit()
