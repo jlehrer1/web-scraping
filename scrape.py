@@ -1,7 +1,6 @@
 import requests, sys, getopt
 import json 
 import tqdm 
-import numpy as np
 import urllib.request
 import os
 import argparse
@@ -14,16 +13,16 @@ def dir_path(string):
 
 
 if __name__ == '__main__':
-    write = dir_path(sys.argv[2])
-
     if len(sys.argv) != 3:
         print('Use case: scrape.py <search term> <write location>')
-        sys.exit()
+        quit()
+
+    write = dir_path(sys.argv[2])
 
     for i in tqdm.tqdm(range(1,11)):
         params = {
-            ('key','KEY'),
-            ('cx', 'CX'),
+            ('key','AIzaSyDA2z-ZOZcnkIjVKkwaAxXnYblHHY3lNUM'),
+            ('cx', '017930800208229040610:cpgopip5no8'),
             ('q', sys.argv[1]),
             ('searchType', 'image'),
             ('num', 10), #max per day?
@@ -37,5 +36,5 @@ if __name__ == '__main__':
             for j, responses in tqdm.tqdm(enumerate(response.json()['items'])):
                 urllib.request.urlretrieve(responses['link'], write + '/{}{}.png'.format(i,j))
         else:
-            print('API Error')
-            sys.exit()
+            print('API error: {}'.format(str(response.status_code)))
+            quit()
