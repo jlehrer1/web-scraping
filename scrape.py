@@ -6,8 +6,6 @@ import urllib.request
 import os
 import argparse
 
-# parser = argparse.ArgumentParser()
-
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print('Use case: scrape.py <search term> <write location>')
@@ -28,9 +26,7 @@ if __name__ == '__main__':
         response = requests.get('https://www.googleapis.com/customsearch/v1?', params=params)
         if response.status_code == 200:
             for j, responses in tqdm.tqdm(enumerate(response.json()['items'])):
-                # print(type(responses['link']))
                 urllib.request.urlretrieve(responses['link'], sys.argv[2] + '/{}{}.png'.format(i,j))
-            # print(response.text)
         else:
             print('API Error')
             sys.exit()
