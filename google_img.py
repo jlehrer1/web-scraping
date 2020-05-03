@@ -7,7 +7,7 @@ import argparse
 
 if __name__ == '__main__':
     if len(sys.argv) != 4:
-        print('Use case: scrape.py <params file> <search term> <write location>')
+        print('Use case: {} <params file> <search term> <write location>'.format(sys.argv[0]))
         quit()
 
     if os.path.isdir(sys.argv[3]) == False:
