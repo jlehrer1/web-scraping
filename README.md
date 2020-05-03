@@ -5,6 +5,13 @@ also try plurals.
 
 Usage: 
 ```
-scrape.py <search term> <write location>
+scrape.py <params file> <search term> <write location>
 ```
 
+If the write location doesn't currently exist, the user will be prompted to create it.
+
+The params file must be in the form
+```
+<KEY>
+<CX>
+```

@@ -6,34 +6,46 @@ import os
 import argparse
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print('Use case: scrape.py <search term> <write location>')
+    if len(sys.argv) != 4:
+        print('Use case: scrape.py <params file> <search term> <write location>')
         quit()
 
-    if os.path.isdir(sys.argv[2]) == False:
-        try:
-            os.mkdir(sys.argv[2])
-        except OSError:
-            print('Attempt to make directory failed')
-
+    if os.path.isdir(sys.argv[3]) == False:
+        check = input('Current write location does not exist. Would you like to create it? [y/n]')
+        if check == 'y':
+            try:
+                os.mkdir(sys.argv[3])
+            except OSError:
+                print('Attempt to make directory failed...')
+        else:
+            quit()
+    try:
+        params = open(sys.argv[1])
+    except:
+        raise FileNotFoundError
+    
+    key = params.readline().rstrip()
+    cx = params.readline().rstrip()
 
     for i in tqdm.tqdm(range(1,11)):
         params = {
-            ('key','AIzaSyDA2z-ZOZcnkIjVKkwaAxXnYblHHY3lNUM'),
-            ('cx', '017930800208229040610:cpgopip5no8'),
-            ('q', sys.argv[1]),
+            ('key', key),
+            ('cx', cx),
+            ('q', sys.argv[2]),
             ('searchType', 'image'),
             ('num', 10), #max per day?
             ('safe', 'off'),
             # ('imgColorType', 'grey')
             ('start', i),
         }
-
         response = requests.get('https://www.googleapis.com/customsearch/v1?', params=params)
         if response.status_code >= 400:
             print('API error: {}'.format(str(response.status_code)))
             quit()
         else:
             for j, responses in tqdm.tqdm(enumerate(response.json()['items'])):
-                urllib.request.urlretrieve(responses['link'], sys.argv[2] + '/{}{}.png'.format(i,j))
+                try:
+                    urllib.request.urlretrieve(responses['link'], sys.argv[3] + '/{}{}.png'.format(i,j))
+                except:
+                    continue
     
