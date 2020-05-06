@@ -31,4 +31,5 @@ if __name__ == '__main__':
         try:
             urllib.request.urlretrieve('https://picsum.photos/256', sys.argv[2] + '/{}.png'.format(i))
         except:
+            i += 1
             continue
