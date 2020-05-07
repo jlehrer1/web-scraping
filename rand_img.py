@@ -16,7 +16,7 @@ if __name__ == '__main__':
             try:
                 os.mkdir(sys.argv[2])
             except FileExistsError:
-                print('Directory already exists. Contuinuing...')
+                print('Directory already exists. Continuing...')
         else:
             quit()
 
